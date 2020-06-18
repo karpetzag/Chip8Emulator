@@ -1,0 +1,96 @@
+[
+	{ 
+		"name": "15 PUZZLE",
+		"filename": "15PUZZLE",
+	},
+	{
+		"name": "BLINKY",
+		"filename": "BLINKY",
+	},
+	{ 
+		"name": "BLITZ",
+		"filename": "BLITZ",
+	},
+	{ 
+		"name": "BRIX",
+		"filename": "BRIX",
+	},
+	{ 
+		"name": "MAZE",
+		"filename": "MAZE",
+	},
+	{ 
+		"name": "CONNECT 4",
+		"filename": "CONNECT4",
+	},
+	{ 
+		"name": "GUESS",
+		"filename": "GUESS",
+	},
+	{ 
+		"name": "HIDDEN",
+		"filename": "HIDDEN",
+	},
+	{ 
+		"name": "SPACE INVADERS",
+		"filename": "INVADERS",
+	},
+	{ 
+		"name": "KALEID",
+		"filename": "KALEID",
+	},
+	{
+		"name": "MERLIN",
+		"filename": "MERLIN",
+	},
+	{
+		"name": "MISSILE",
+		"filename": "MISSILE",
+	},
+	{
+		"name": "PONG",
+		"filename": "PONG",
+	},
+	{
+		"name": "PONG 2",
+		"filename": "PONG2",
+		"description": "MAZE",
+	},
+
+	{
+		"name": "PUZZLE",
+		"filename": "PUZZLE",
+	},
+	{
+		"name": "SYZYGY",
+		"filename": "SYZYGY",
+	},
+	{
+		"name": "TANK",
+		"filename": "TANK",
+	},
+	{
+		"name": "TETRIS",
+		"filename": "TETRIS",
+	},
+	{
+		"name": "TICTAC",
+		"filename": "TICTAC",
+	},
+	{
+		"name": "UFO",
+		"filename": "UFO",
+	},
+	{
+		"name": "VBRIX",
+		"filename": "VBRIX",
+	},
+	{
+		"name": "VERS",
+		"filename": "VERS",
+	},
+	{
+		"name": "WIPEOFF",
+		"filename": "WIPEOFF",
+	}
+]
