@@ -1,3 +1,3 @@
-# Chip8Emulator
+# CHIP-8 Emulator (Swift)
 
-Basic Chip8 emulator for macOS written in Swift + SwiftUI
+Basic (CHIP-8) (https://en.wikipedia.org/wiki/CHIP-8) emulator for macOS written in Swift + SwiftUI
