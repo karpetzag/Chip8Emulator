@@ -157,30 +157,30 @@ enum OpCode: CustomDebugStringConvertible
     case skipNextIfVxNotEqualConstant(vxIndex: RegisterIndex, Constant8bit) // 4XNN
     case skipNextIfVxEqualVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 5XY0
     case setValue(vxIndex: RegisterIndex, value: Constant8bit) //
-    case addValueToVx(vxIndex: RegisterIndex, value: Constant8bit) //    7XNN
-    case setVxToVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex)//   8XY0
-    case setVxToVxOrVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex)//    8XY1
-    case setVxToVxAndVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex)//    8XY2
-    case setVxToVxXorVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex)//    8XY3
-    case addVyToVx(vxIndex: RegisterIndex, vyIndex: RegisterIndex)//8XY4
-    case subVyFromVx(vxIndex: RegisterIndex, vyIndex: RegisterIndex) //   8XY5
+    case addValueToVx(vxIndex: RegisterIndex, value: Constant8bit) // 7XNN
+    case setVxToVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex)// 8XY0
+    case setVxToVxOrVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex) //8XY1
+    case setVxToVxAndVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 8XY2
+    case setVxToVxXorVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 8XY3
+    case addVyToVx(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 8XY4
+    case subVyFromVx(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 8XY5
     case shiftRight(vxIndex: RegisterIndex) //8XY6
-	case subtract(vxIndex: RegisterIndex, vyIndex: RegisterIndex) //  8XY7
-	case shiftLeft(vxIndex: RegisterIndex) //8XYE
+	case subtract(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 8XY7
+	case shiftLeft(vxIndex: RegisterIndex) // 8XYE
     case skipNextIfVxNotEqualVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 9XY0
-    case setItoAddress(address: MemoryAddress) //ANNN
+    case setItoAddress(address: MemoryAddress) // ANNN
     case relativeJump(address: MemoryAddress) // BNNN
-    case setVxToRandAndNN(vxIndex: RegisterIndex, constant: Constant8bit) //    CXNN
+    case setVxToRandAndNN(vxIndex: RegisterIndex, constant: Constant8bit) // CXNN
     case draw(vxIndex: RegisterIndex, vyIndex: RegisterIndex, height: Int) // DXYN
 	case skipNextIfKeyIsPressed(vxIndex: RegisterIndex) // EX9E
-    case skipNextIfKeyIsNotPressed(vxIndex: RegisterIndex) //EXA1
-    case getDelayTimerValue(vxIndex: RegisterIndex) //FX07
-    case waitKey(vxIndex: RegisterIndex) //FX0A
-    case setDelayTimer(vxIndex: RegisterIndex)//FX15
-    case setSoundTimer(vxIndex: RegisterIndex) //FX18
-	case addVxToI(vxIndex: RegisterIndex) //FX1E
-    case loadFont(vxIndex: RegisterIndex) //FX29
-    case setBCD(vxIndex: RegisterIndex)  //FX33
-	case store(vxIndex: RegisterIndex) //FX55
-	case load(vxIndex: RegisterIndex) //FX65
+    case skipNextIfKeyIsNotPressed(vxIndex: RegisterIndex) // EXA1
+    case getDelayTimerValue(vxIndex: RegisterIndex) // FX07
+    case waitKey(vxIndex: RegisterIndex) // FX0A
+    case setDelayTimer(vxIndex: RegisterIndex)// FX15
+    case setSoundTimer(vxIndex: RegisterIndex) // FX18
+	case addVxToI(vxIndex: RegisterIndex) // FX1E
+    case loadFont(vxIndex: RegisterIndex) // FX29
+    case setBCD(vxIndex: RegisterIndex)  // FX33
+	case store(vxIndex: RegisterIndex) // FX55
+	case load(vxIndex: RegisterIndex) // FX65
 }

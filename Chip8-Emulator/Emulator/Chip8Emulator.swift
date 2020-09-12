@@ -279,8 +279,8 @@ class Chip8Emulator {
 	}
 }
 
-private extension Chip8Emulator
-{
+private extension Chip8Emulator {
+
 	func loadRom(_ rom: Data) {
 		for (index, byte) in rom.enumerated() {
 			memory[index + Int(Configuration.appStartAddress)] = byte

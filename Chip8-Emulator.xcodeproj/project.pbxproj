@@ -98,6 +98,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8D892CD6249DB5400012546F /* Emulator */ = {
+			isa = PBXGroup;
+			children = (
+				8DD2E38424991C5E009315ED /* Decoder.swift */,
+				8DD2E3472499134F009315ED /* Chip8Emulator.swift */,
+				8DD2E3642499134F009315ED /* EmulationController.swift */,
+			);
+			path = Emulator;
+			sourceTree = "<group>";
+		};
 		8DD2E32624991236009315ED = {
 			isa = PBXGroup;
 			children = (
@@ -117,9 +127,7 @@
 		8DD2E33124991236009315ED /* Chip8-Emulator */ = {
 			isa = PBXGroup;
 			children = (
-				8DD2E38424991C5E009315ED /* Decoder.swift */,
-				8DD2E3472499134F009315ED /* Chip8Emulator.swift */,
-				8DD2E3642499134F009315ED /* EmulationController.swift */,
+				8D892CD6249DB5400012546F /* Emulator */,
 				8DD2E3612499134F009315ED /* EmulatorScreen */,
 				8DD2E3452499134F009315ED /* Misc */,
 				8DD2E3482499134F009315ED /* ROMs */,

@@ -16,8 +16,7 @@ class EmulationController {
 		case initial, running, paused
 	}
 
-	private enum TimerIntervals
-	{
+	private enum TimerIntervals {
 		static let loopTimer: TimeInterval = 1.0 / 500
 		static let systemTimer: TimeInterval = 1.0 / 60.0
 	}
@@ -26,14 +25,15 @@ class EmulationController {
 
 	private(set) var screenUpdate = PassthroughSubject<[UInt8], Never>()
 
-    private let queue = DispatchQueue(label: "com.chip8.emulator", qos: .userInteractive)
+	private let queue = DispatchQueue(label: "com.chip8.emulator", qos: .userInteractive)
 
 	private var rom: Data?
-    private let emulator = Chip8Emulator()
+	private let emulator = Chip8Emulator()
 
 	private lazy var loopTimer: GCDTimer = {
+		let interval = DispatchTimeInterval.nanoseconds(TimerIntervals.loopTimer.toNanoseconds())
 		let timer = GCDTimer.scheduledTimer(queue: self.queue,
-											timeInterval: .nanoseconds(TimerIntervals.loopTimer.toNanoseconds())) { [weak self] in
+											timeInterval: interval) { [weak self] in
 												self?.onLoopTimerTick()
 		}
 		timer.pause()
@@ -41,8 +41,9 @@ class EmulationController {
 	}()
 
 	private lazy var systemTimer: GCDTimer = {
+		let interval = DispatchTimeInterval.nanoseconds(TimerIntervals.systemTimer.toNanoseconds())
 		let timer = GCDTimer.scheduledTimer(queue: self.queue,
-											timeInterval: .nanoseconds(TimerIntervals.systemTimer.toNanoseconds())) { [weak self] in
+											timeInterval: interval) { [weak self] in
 												self?.emulator.handleTimerTick()
 		}
 		timer.pause()
@@ -154,7 +155,7 @@ private extension EmulationController
 
     @objc
     func onRedraw() {
-         guard needsRedraw else {
+		guard needsRedraw else {
 			return
 		}
 
