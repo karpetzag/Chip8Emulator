@@ -127,6 +127,7 @@ struct KeypadButton: View {
 			.frame(width: 40, height: 40)
 			.overlay(Text(value).allowsHitTesting(false)
 			.font(.subheadline))
+            .foregroundColor(.black)
 
 	}
 }
