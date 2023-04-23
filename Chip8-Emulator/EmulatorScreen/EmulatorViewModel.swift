@@ -74,8 +74,7 @@ class EmulatorViewModel: ObservableObject {
 	}
 }
 
-private extension EmulatorViewModel
-{
+private extension EmulatorViewModel {
 	func setup() {
 		emulationController.screenUpdate
 			.map(makeScreenImage(screen:))
@@ -116,7 +115,7 @@ private extension EmulatorViewModel
                 let index = y * width + x
                 let val = screen[index]
                 if val != 0 {
-                    let rect = CGRect(x: x * pointSize, y: y * pointSize, width: pointSize , height: pointSize)
+                    let rect = CGRect(x: x * pointSize, y: y * pointSize, width: pointSize, height: pointSize)
 					rects.append(rect)
                 }
             }

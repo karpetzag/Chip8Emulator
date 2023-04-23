@@ -29,9 +29,11 @@ class GCDTimer {
 		self.cancel()
 	}
 
-	static func scheduledTimer(queue: DispatchQueue,
-							   timeInterval: DispatchTimeInterval,
-							   handler: @escaping () -> Void) -> GCDTimer {
+	static func scheduledTimer(
+		queue: DispatchQueue,
+		timeInterval: DispatchTimeInterval,
+		handler: @escaping () -> Void
+	) -> GCDTimer {
 		let timer = GCDTimer(queue: queue, timeInterval: timeInterval, handler: handler)
 		timer.start()
 		return timer

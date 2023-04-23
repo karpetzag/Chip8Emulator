@@ -35,22 +35,22 @@ enum Key: UInt8 {
 }
 
 class Chip8Emulator {
-    
+
     enum Configuration {
-        
+
         static let numberOfRegisters = 16
-        
+
         static let appStartAddress: UInt16 = 0x200
-        
+
         static let memorySize = 1024 * 4
-        
+
         static let screenWidth = 64
         static let screenHeight = 32
-        
+
         static let stackSize = 16
-        
+
         static let numberOfKeys = 16
-        
+
         static let fonts: [UInt8] = [
           0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
           0x20, 0x60, 0x20, 0x20, 0x70, // 1
@@ -69,7 +69,7 @@ class Chip8Emulator {
           0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
           0xF0, 0x80, 0xF0, 0x80, 0x80  // F
         ]
-        
+
     }
 
 	var soundHandler: (() -> Void)?
@@ -77,19 +77,19 @@ class Chip8Emulator {
     private(set) var V = [Register](repeating: 0, count: Configuration.numberOfRegisters)
     private(set) var I: MemoryAddress = 0x0000
     private(set) var memory = [UInt8](repeating: 0, count: Configuration.memorySize)
-        
+
     private(set) var stack = [MemoryAddress](repeating: 0, count: Configuration.stackSize)
     private(set) var sp = 0
-    
+
     private(set) var needsToRedraw = false
     private(set) var needsToPlaySound = false
 
     private(set) var screen = [UInt8](repeating: 0, count: Configuration.screenWidth * Configuration.screenHeight)
-    
+
     private(set) var pc = Configuration.appStartAddress
-    
+
     private var keypad = [Bool](repeating: false, count: Configuration.numberOfKeys)
-   
+
     private var delayTimerValue = 0
     private var soundTimerValue = -1
 
@@ -115,12 +115,12 @@ class Chip8Emulator {
     func handleInput(key: Key, isPressed: Bool) {
         keypad[Int(key.rawValue)] = isPressed
     }
-    
+
     func handleTimerTick() {
         if self.delayTimerValue > 0 {
             self.delayTimerValue -= 1
         }
-               
+
         if soundTimerValue > 0 {
             soundTimerValue -= 1
         } else if soundTimerValue == 0 {
@@ -167,7 +167,7 @@ class Chip8Emulator {
 			}
 		case .setValue(let vxIndex, let value):
 			V[vxIndex] = value
-		case .addValueToVx(let vxIndex,  let value):
+		case .addValueToVx(let vxIndex, let value):
 			V[vxIndex] &+= value
 		case .setVxToVy(let vxIndex, let vyIndex):
 			V[vxIndex] = V[Int(vyIndex)]

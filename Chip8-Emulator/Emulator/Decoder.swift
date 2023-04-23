@@ -8,22 +8,20 @@
 
 import Foundation
 
-extension UInt16
-{
+extension UInt16 {
     var hex: String {
-        return String(format:"%04X", self)
+        return String(format: "%04X", self)
     }
 }
 
-extension UInt8
-{
+extension UInt8 {
     var hex: String {
-        return String(format:"%02X", self)
+        return String(format: "%02X", self)
     }
 }
 
 class Decoder {
-    
+
     static func decodeRom(_ rom: Data) -> String {
 		var result = ""
         for val in stride(from: 0, to: rom.count - 1, by: 2) {
@@ -37,77 +35,76 @@ class Decoder {
         }
 		return result
     }
-    
+
     static func decode(rawOpCode: RawOpCode) -> OpCode {
         let address = MemoryAddress(rawOpCode & 0x0FFF)
-        
+
         let value = UInt8(rawOpCode & 0x00FF)
         let xRegister = Int((rawOpCode & 0x0F00) >> 8)
         let yRegister = Int((rawOpCode & 0x00F0) >> 4)
-        
+
         let xIndex = Int(xRegister)
         let yIndex = Int(yRegister)
-        
+
         let nibble = rawOpCode & 0x000F
-        
+
         switch rawOpCode & 0xF000 {
-        case 0x0000:
+		case 0x0000:
 			switch value {
 			case 0xE0: return .clearScreen
 			case 0xEE: return .return
 			default: return .unknown
 			}
-        case 0x1000: return .goto(address)
-        case 0x2000: return .call(address)
-        case 0x3000: return .skipNextIfVxEqualConstant(vxIndex: xIndex, value)
-        case 0x4000: return .skipNextIfVxNotEqualConstant(vxIndex: xIndex, value)
-        case 0x5000: return .skipNextIfVxEqualVy(vxIndex: xIndex, vyIndex: yIndex)
-        case 0x6000: return .setValue(vxIndex: xIndex, value: value)
-        case 0x7000: return .addValueToVx(vxIndex: xIndex, value: value)
-        case 0x8000:
-            switch nibble {
-            case 0: return .setVxToVy(vxIndex: xIndex, vyIndex: yIndex)
-            case 1: return .setVxToVxOrVy(vxIndex: xIndex, vyIndex: yIndex)
-            case 2: return .setVxToVxAndVy(vxIndex: xIndex, vyIndex: yIndex)
-            case 3: return .setVxToVxXorVy(vxIndex: xIndex, vyIndex: yIndex)
-            case 4: return .addVyToVx(vxIndex: xIndex, vyIndex: yIndex)
-            case 5: return .subVyFromVx(vxIndex: xIndex, vyIndex: yIndex)
+		case 0x1000: return .goto(address)
+		case 0x2000: return .call(address)
+		case 0x3000: return .skipNextIfVxEqualConstant(vxIndex: xIndex, value)
+		case 0x4000: return .skipNextIfVxNotEqualConstant(vxIndex: xIndex, value)
+		case 0x5000: return .skipNextIfVxEqualVy(vxIndex: xIndex, vyIndex: yIndex)
+		case 0x6000: return .setValue(vxIndex: xIndex, value: value)
+		case 0x7000: return .addValueToVx(vxIndex: xIndex, value: value)
+		case 0x8000:
+			switch nibble {
+			case 0: return .setVxToVy(vxIndex: xIndex, vyIndex: yIndex)
+			case 1: return .setVxToVxOrVy(vxIndex: xIndex, vyIndex: yIndex)
+			case 2: return .setVxToVxAndVy(vxIndex: xIndex, vyIndex: yIndex)
+			case 3: return .setVxToVxXorVy(vxIndex: xIndex, vyIndex: yIndex)
+			case 4: return .addVyToVx(vxIndex: xIndex, vyIndex: yIndex)
+			case 5: return .subVyFromVx(vxIndex: xIndex, vyIndex: yIndex)
 			case 6: return .shiftRight(vxIndex: xIndex)
 			case 7: return .subtract(vxIndex: xIndex, vyIndex: yIndex)
 			case 0xE: return .shiftLeft(vxIndex: xIndex)
-            default: return .unknown
-            }
-        case 0x9000: return .skipNextIfVxNotEqualVy(vxIndex: xIndex, vyIndex: yIndex)
-        case 0xA000: return .setItoAddress(address: address)
-        case 0xB000: return .relativeJump(address: address)
-        case 0xC000: return .setVxToRandAndNN(vxIndex: xIndex, constant: value)
-        case 0xD000: return .draw(vxIndex: xIndex, vyIndex: yIndex, height: Int(nibble))
-        case 0xE000:
-            switch value {
-            case 0xA1: return .skipNextIfKeyIsNotPressed(vxIndex: xIndex)
+			default: return .unknown
+			}
+		case 0x9000: return .skipNextIfVxNotEqualVy(vxIndex: xIndex, vyIndex: yIndex)
+		case 0xA000: return .setItoAddress(address: address)
+		case 0xB000: return .relativeJump(address: address)
+		case 0xC000: return .setVxToRandAndNN(vxIndex: xIndex, constant: value)
+		case 0xD000: return .draw(vxIndex: xIndex, vyIndex: yIndex, height: Int(nibble))
+		case 0xE000:
+			switch value {
+			case 0xA1: return .skipNextIfKeyIsNotPressed(vxIndex: xIndex)
 			case 0x9E: return .skipNextIfKeyIsPressed(vxIndex: xIndex)
-            default: return .unknown
-            }
-        case 0xF000:
-            switch value {
-            case 0x15: return .setDelayTimer(vxIndex: xIndex)
-            case 0x07: return .getDelayTimerValue(vxIndex: xIndex)
-            case 0x18: return .setSoundTimer(vxIndex: xIndex)
-            case 0x33: return .setBCD(vxIndex: xIndex)
-            case 0x65: return .load(vxIndex: xIndex)
+			default: return .unknown
+			}
+		case 0xF000:
+			switch value {
+			case 0x15: return .setDelayTimer(vxIndex: xIndex)
+			case 0x07: return .getDelayTimerValue(vxIndex: xIndex)
+			case 0x18: return .setSoundTimer(vxIndex: xIndex)
+			case 0x33: return .setBCD(vxIndex: xIndex)
+			case 0x65: return .load(vxIndex: xIndex)
 			case 0x55: return .store(vxIndex: xIndex)
-            case 0x29: return .loadFont(vxIndex: xIndex)
+			case 0x29: return .loadFont(vxIndex: xIndex)
 			case 0x1E: return .addVxToI(vxIndex: xIndex)
 			case 0x0A: return .waitKey(vxIndex: xIndex)
-            default: return .unknown
-            }
-        default: return .unknown
-        }
-    }
+			default: return .unknown
+			}
+		default: return .unknown
+		}
+	}
 }
 
-enum OpCode: CustomDebugStringConvertible
-{
+enum OpCode: CustomDebugStringConvertible {
 	var debugDescription: String {
 		switch self {
 		case .call(let address): return "Call address \(address.hex)"
@@ -149,22 +146,22 @@ enum OpCode: CustomDebugStringConvertible
 	}
 
     case unknown
-    case clearScreen //00E0
+    case clearScreen // 00E0
     case `return` // 00EE
-    case goto(MemoryAddress) //1NNN
-    case call(MemoryAddress) //2NNN
-    case skipNextIfVxEqualConstant(vxIndex: RegisterIndex, Constant8bit) //3XNN
+    case goto(MemoryAddress) // 1NNN
+    case call(MemoryAddress) // 2NNN
+    case skipNextIfVxEqualConstant(vxIndex: RegisterIndex, Constant8bit) // 3XNN
     case skipNextIfVxNotEqualConstant(vxIndex: RegisterIndex, Constant8bit) // 4XNN
     case skipNextIfVxEqualVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 5XY0
     case setValue(vxIndex: RegisterIndex, value: Constant8bit) //
     case addValueToVx(vxIndex: RegisterIndex, value: Constant8bit) // 7XNN
     case setVxToVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex)// 8XY0
-    case setVxToVxOrVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex) //8XY1
+    case setVxToVxOrVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 8XY1
     case setVxToVxAndVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 8XY2
     case setVxToVxXorVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 8XY3
     case addVyToVx(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 8XY4
     case subVyFromVx(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 8XY5
-    case shiftRight(vxIndex: RegisterIndex) //8XY6
+    case shiftRight(vxIndex: RegisterIndex) // 8XY6
 	case subtract(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 8XY7
 	case shiftLeft(vxIndex: RegisterIndex) // 8XYE
     case skipNextIfVxNotEqualVy(vxIndex: RegisterIndex, vyIndex: RegisterIndex) // 9XY0

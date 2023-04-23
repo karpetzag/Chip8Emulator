@@ -69,7 +69,6 @@ struct Keypad: View {
 		}
 	}
 
-
 	func keyValue(row: Int, column: Int) -> String {
 		let index = row * self.height + column
 		switch index {

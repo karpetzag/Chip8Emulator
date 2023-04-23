@@ -68,7 +68,7 @@ class EmulationController {
 		guard let rom = self.rom else {
 			return
 		}
-		
+
 		restart(rom: rom)
 	}
 
@@ -128,8 +128,7 @@ class EmulationController {
 	}
 }
 
-private extension EmulationController
-{
+private extension EmulationController {
 	func onStart() {
 		systemTimer.resume()
 		loopTimer.resume()
@@ -164,8 +163,7 @@ private extension EmulationController
     }
 }
 
-extension TimeInterval
-{
+extension TimeInterval {
 	func toNanoseconds() -> Int {
 		Int(self * Double(NSEC_PER_SEC))
 	}

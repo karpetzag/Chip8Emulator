@@ -9,20 +9,19 @@
 import Foundation
 import AppKit
 
-
-//Source: https://gist.github.com/CanTheAlmighty/ee76fbf701a61651fe439fcd6d25f41d
+// Source: https://gist.github.com/CanTheAlmighty/ee76fbf701a61651fe439fcd6d25f41d
 
 /**
  Analog to the CADisplayLink in iOS.
  */
 class DisplayLink {
-	
+
     var callback: (() -> Void)?
 
-    private let timer  : CVDisplayLink
-    private let source : DispatchSourceUserDataAdd
+    private let timer: CVDisplayLink
+    private let source: DispatchSourceUserDataAdd
 
-    private  var running : Bool { return CVDisplayLinkIsRunning(timer) }
+    private  var running: Bool { return CVDisplayLinkIsRunning(timer) }
 
     /**
      Creates a new DisplayLink that gets executed on the given queue
@@ -35,16 +34,19 @@ class DisplayLink {
         source = DispatchSource.makeUserDataAddSource(queue: queue)
 
         // Timer
-        var timerRef : CVDisplayLink? = nil
+        var timerRef: CVDisplayLink?
 
         // Create timer
         var successLink = CVDisplayLinkCreateWithActiveCGDisplays(&timerRef)
 
         if let timer = timerRef {
             // Set Output
-            successLink = CVDisplayLinkSetOutputCallback(timer,
-            {
-                (timer : CVDisplayLink, currentTime : UnsafePointer<CVTimeStamp>, outputTime : UnsafePointer<CVTimeStamp>, _ : CVOptionFlags, _ : UnsafeMutablePointer<CVOptionFlags>, sourceUnsafeRaw : UnsafeMutableRawPointer?) -> CVReturn in
+            successLink = CVDisplayLinkSetOutputCallback(timer, {
+                (_: CVDisplayLink, _: UnsafePointer<CVTimeStamp>,
+				 _: UnsafePointer<CVTimeStamp>,
+				 _ : CVOptionFlags, _ : UnsafeMutablePointer<CVOptionFlags>,
+				 sourceUnsafeRaw: UnsafeMutableRawPointer?
+				) -> CVReturn in
 
                 // Un-opaque the source
                 if let sourceUnsafeRaw = sourceUnsafeRaw {
@@ -71,8 +73,7 @@ class DisplayLink {
             }
 
             self.timer = timer
-        }
-        else {
+        } else {
             assertionFailure("Failed to create timer with active display")
             return nil
         }

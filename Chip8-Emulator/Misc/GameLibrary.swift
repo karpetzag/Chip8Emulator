@@ -9,7 +9,7 @@
 import Foundation
 
 struct Game: Codable, Identifiable, Hashable {
-	
+
 	let name: String
 	let filename: String
 
